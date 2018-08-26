@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>The Psyhic-Game!</title>
+    <link href ="style/style.css" rel="assets">
+   
+  </head>
+  <body>
+
+    <h1>The Psyhic-Game</h1>
+    <h2>Guess a letter.</h2>
+    <h2>See random.</h2>
+    <script type="text/javascript"> </script>
+
+
+    <script>
+
+     //Setting all to zero
+      var rand_letter = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+      
+      //var actual_letter = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+      let win = 0;
+
+      let loss = 0;
+
+      let guessesleft = 9;
+
+      let guessesletters = [];
+      var letterToGuess = null;
+
+      //lets the computer select a random letter from the available choices
+      var computerGuess = rand_letter[Math.floor(Math.random()* rand_letter.length)];
+      
+      //Allow the usert 9 guesses
+      //gursses = guesses || 9
+      function updateGuessesLeft() {
+            //here we are grabbing the HTML element a d setting it equal to the guessesLeft. (i.e guesesleft will get displayed in HTML 
+          document.querySelector('#guessLeft').innerHTML = "Guesses left:" + guessesLeft;
+
+      };
+       function updateletterToGuess() {
+         this.letterToGuess = computerChoices[Math.floor(Math.random()* computerChoices.length)];
+       
+      }
+        function ypdateGuessesSoFar() {
+            //here we take the guess the user has tried -- then displayit as letters separated by commas.
+            document.querySelector('#let').innerHTML = "your Guesses so far:" + guessedletters.join(',');
+        };
+         
+
+         //Function will be called when we reset everything
+         var reset = function() {
+              totalGuesses=9;
+              gussesleft=9;
+              guessedLetters=[];
+
+              updateletterToGuess();
+              updateGuessesLeft();
+              updateGuessesSoFat();
+
+         }
+
+         // When key is released it becomes the users guess
+         document.onkeyup = function(event) {
+           var userGuess= String.fromCharCode(event.keyCode).tolowerCase();
+           var check = computerChoices.includes(userGues);
+
+           if(check === false) {
+             ouch.play();
+             alert("That was not a  valid guess, try again?"); 
+             return false;
+           } else if (check === true) {
+              //if the User choice was an alphabet char then update guesses letter and user guess to the array of guessed letters
+              guessesleft--;
+              gussedLetters.push(userGuess);
+              updateGuessesLeft();
+              updateGuessesSoFar();
+                  
+
+                if(guessesleft>o) {
+                  if (userGuess == letterToGuess) {
+                    wins++;
+                    yay.play();
+                    document.querySelector('#wins').innerHTML = "Wins:" + wins;
+                    userGuess = userGuess.toUpperCase();
+                    alert("yes, you are psychic! Manti has chosen" + userGuess);
+                    rest();
+                  }
+                  else if (guessesleft == 0) {
+                    //then we will loss and we'll update the html to display the loss 
+                    losses++;
+                    document.querySelector('#losses').innerHTML = "losses" + losses;
+                    alert("sorry, you are not psychix,maybe try again?")
+                    // then we'll can the rest.
+                    rest();
+                  }
+                  return false;
+                } else {
+                  alert ("Oopssss, we have error");
+
+                }
+              };
+            };
+
+      // Captures keyboard input. Depending on the letter pressed it will "call" (execute) different functions.
+      document.onkeyup = function(event) {
+
+        // Captures the key press, converts it to lowercase, and saves it to a variable.
+        var letter = event.key.toLowerCase();
+
+        if (letter === actual_letter) {
+          win++;
+          reWriteStats();
+        }
+
+        if (letter != actual_letter) {
+          guesses--;
+          if (guesses == 0){
+            //you lose
+          }
+          reWriteStats();
+        }
+      };
+
+    </script>
+
+   </body>
+  </html>
